@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.ComputerMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.Computer" >
+    <constructor >
+      <idArg column="com_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="com_type_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="com_price" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="com_toptime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="com_downtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="com_state" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="com_xid" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    com_id, com_type_id, com_price, user_id, com_toptime, com_downtime, com_state, com_xid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_computer
+    where com_id = #{comId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_computer
+    where com_id = #{comId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.Computer" >
+    insert into t_computer (com_id, com_type_id, com_price, 
+      user_id, com_toptime, com_downtime, 
+      com_state, com_xid)
+    values (#{comId,jdbcType=BIGINT}, #{comTypeId,jdbcType=BIGINT}, #{comPrice,jdbcType=REAL}, 
+      #{userId,jdbcType=BIGINT}, #{comToptime,jdbcType=TIMESTAMP}, #{comDowntime,jdbcType=TIMESTAMP}, 
+      #{comState,jdbcType=VARCHAR}, #{comXid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.Computer" >
+    insert into t_computer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="comId != null" >
+        com_id,
+      </if>
+      <if test="comTypeId != null" >
+        com_type_id,
+      </if>
+      <if test="comPrice != null" >
+        com_price,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="comToptime != null" >
+        com_toptime,
+      </if>
+      <if test="comDowntime != null" >
+        com_downtime,
+      </if>
+      <if test="comState != null" >
+        com_state,
+      </if>
+      <if test="comXid != null" >
+        com_xid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="comId != null" >
+        #{comId,jdbcType=BIGINT},
+      </if>
+      <if test="comTypeId != null" >
+        #{comTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="comPrice != null" >
+        #{comPrice,jdbcType=REAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="comToptime != null" >
+        #{comToptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comDowntime != null" >
+        #{comDowntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comState != null" >
+        #{comState,jdbcType=VARCHAR},
+      </if>
+      <if test="comXid != null" >
+        #{comXid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.Computer" >
+    update t_computer
+    <set >
+      <if test="comTypeId != null" >
+        com_type_id = #{comTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="comPrice != null" >
+        com_price = #{comPrice,jdbcType=REAL},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="comToptime != null" >
+        com_toptime = #{comToptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comDowntime != null" >
+        com_downtime = #{comDowntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comState != null" >
+        com_state = #{comState,jdbcType=VARCHAR},
+      </if>
+      <if test="comXid != null" >
+        com_xid = #{comXid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where com_id = #{comId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.Computer" >
+    update t_computer
+    set com_type_id = #{comTypeId,jdbcType=BIGINT},
+      com_price = #{comPrice,jdbcType=REAL},
+      user_id = #{userId,jdbcType=BIGINT},
+      com_toptime = #{comToptime,jdbcType=TIMESTAMP},
+      com_downtime = #{comDowntime,jdbcType=TIMESTAMP},
+      com_state = #{comState,jdbcType=VARCHAR},
+      com_xid = #{comXid,jdbcType=BIGINT}
+    where com_id = #{comId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.UserVipMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.UserVip" >
+    <constructor >
+      <arg column="vid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="vip_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.zking.ssm.model.UserVip" >
+    insert into t_user_vip (vid, vip_name)
+    values (#{vid,jdbcType=BIGINT}, #{vipName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.UserVip" >
+    insert into t_user_vip
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vid != null" >
+        vid,
+      </if>
+      <if test="vipName != null" >
+        vip_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vid != null" >
+        #{vid,jdbcType=BIGINT},
+      </if>
+      <if test="vipName != null" >
+        #{vipName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

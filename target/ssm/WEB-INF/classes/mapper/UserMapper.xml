@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.User" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="salt" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="locked" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="money" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="state" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="identity" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="vipid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="img" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="lv" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="xid" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, password, salt, locked, money, state, identity, vipid, img, lv, xid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.User" >
+    insert into t_user (id, name, password, 
+      salt, locked, money, state, 
+      identity, vipid, img, 
+      lv, xid)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{locked,jdbcType=VARCHAR}, #{money,jdbcType=REAL}, #{state,jdbcType=VARCHAR}, 
+      #{identity,jdbcType=VARCHAR}, #{vipid,jdbcType=BIGINT}, #{img,jdbcType=BIGINT}, 
+      #{lv,jdbcType=INTEGER}, #{xid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="locked != null" >
+        locked,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="identity != null" >
+        identity,
+      </if>
+      <if test="vipid != null" >
+        vipid,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="lv != null" >
+        lv,
+      </if>
+      <if test="xid != null" >
+        xid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null" >
+        #{locked,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="vipid != null" >
+        #{vipid,jdbcType=BIGINT},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=BIGINT},
+      </if>
+      <if test="lv != null" >
+        #{lv,jdbcType=INTEGER},
+      </if>
+      <if test="xid != null" >
+        #{xid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.User" >
+    update t_user
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null" >
+        locked = #{locked,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=REAL},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="vipid != null" >
+        vipid = #{vipid,jdbcType=BIGINT},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=BIGINT},
+      </if>
+      <if test="lv != null" >
+        lv = #{lv,jdbcType=INTEGER},
+      </if>
+      <if test="xid != null" >
+        xid = #{xid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.User" >
+    update t_user
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      locked = #{locked,jdbcType=VARCHAR},
+      money = #{money,jdbcType=REAL},
+      state = #{state,jdbcType=VARCHAR},
+      identity = #{identity,jdbcType=VARCHAR},
+      vipid = #{vipid,jdbcType=BIGINT},
+      img = #{img,jdbcType=BIGINT},
+      lv = #{lv,jdbcType=INTEGER},
+      xid = #{xid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

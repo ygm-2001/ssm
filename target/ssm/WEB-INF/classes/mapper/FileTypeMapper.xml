@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.FileTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.FileType" >
+    <constructor >
+      <arg column="file_type_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="f_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.zking.ssm.model.FileType" >
+    insert into t_file_type (file_type_id, f_type)
+    values (#{fileTypeId,jdbcType=BIGINT}, #{fType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.FileType" >
+    insert into t_file_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileTypeId != null" >
+        file_type_id,
+      </if>
+      <if test="fType != null" >
+        f_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileTypeId != null" >
+        #{fileTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="fType != null" >
+        #{fType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.ComputerTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.ComputerType" >
+    <constructor >
+      <arg column="c_type_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="cpu" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="card" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="harddisk" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="c_txid" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.zking.ssm.model.ComputerType" >
+    insert into t_computer_type (c_type_id, cpu, card, 
+      harddisk, c_txid)
+    values (#{cTypeId,jdbcType=BIGINT}, #{cpu,jdbcType=VARCHAR}, #{card,jdbcType=VARCHAR}, 
+      #{harddisk,jdbcType=VARCHAR}, #{cTxid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.ComputerType" >
+    insert into t_computer_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cTypeId != null" >
+        c_type_id,
+      </if>
+      <if test="cpu != null" >
+        cpu,
+      </if>
+      <if test="card != null" >
+        card,
+      </if>
+      <if test="harddisk != null" >
+        harddisk,
+      </if>
+      <if test="cTxid != null" >
+        c_txid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cTypeId != null" >
+        #{cTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="cpu != null" >
+        #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="card != null" >
+        #{card,jdbcType=VARCHAR},
+      </if>
+      <if test="harddisk != null" >
+        #{harddisk,jdbcType=VARCHAR},
+      </if>
+      <if test="cTxid != null" >
+        #{cTxid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

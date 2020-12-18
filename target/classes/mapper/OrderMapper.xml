@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.Order" >
+    <constructor >
+      <idArg column="order_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_item_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="com_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_timed" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="prices" jdbcType="REAL" javaType="java.lang.Float" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, order_item_id, user_id, com_id, order_timed, prices
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.Order" >
+    insert into t_order (order_id, order_item_id, user_id, 
+      com_id, order_timed, prices
+      )
+    values (#{orderId,jdbcType=BIGINT}, #{orderItemId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{comId,jdbcType=BIGINT}, #{orderTimed,jdbcType=TIMESTAMP}, #{prices,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.Order" >
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderItemId != null" >
+        order_item_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="comId != null" >
+        com_id,
+      </if>
+      <if test="orderTimed != null" >
+        order_timed,
+      </if>
+      <if test="prices != null" >
+        prices,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderItemId != null" >
+        #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="comId != null" >
+        #{comId,jdbcType=BIGINT},
+      </if>
+      <if test="orderTimed != null" >
+        #{orderTimed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prices != null" >
+        #{prices,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.Order" >
+    update t_order
+    <set >
+      <if test="orderItemId != null" >
+        order_item_id = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="comId != null" >
+        com_id = #{comId,jdbcType=BIGINT},
+      </if>
+      <if test="orderTimed != null" >
+        order_timed = #{orderTimed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prices != null" >
+        prices = #{prices,jdbcType=REAL},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.Order" >
+    update t_order
+    set order_item_id = #{orderItemId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      com_id = #{comId,jdbcType=BIGINT},
+      order_timed = #{orderTimed,jdbcType=TIMESTAMP},
+      prices = #{prices,jdbcType=REAL}
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.ShopMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.Shop" >
+    <constructor >
+      <idArg column="shop_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="shop_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_price" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="shop_inven" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_state" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_imgi" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="shop_imgv" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="shop_xid" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shop_id, shop_name, shop_type, shop_price, shop_inven, shop_state, shop_imgi, shop_imgv, 
+    shop_time, shop_xid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_shop
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_shop
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zking.ssm.model.Shop" >
+    insert into t_shop (shop_id, shop_name, shop_type, 
+      shop_price, shop_inven, shop_state, 
+      shop_imgi, shop_imgv, shop_time, 
+      shop_xid)
+    values (#{shopId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR}, #{shopType,jdbcType=VARCHAR}, 
+      #{shopPrice,jdbcType=REAL}, #{shopInven,jdbcType=VARCHAR}, #{shopState,jdbcType=VARCHAR}, 
+      #{shopImgi,jdbcType=BIGINT}, #{shopImgv,jdbcType=VARCHAR}, #{shopTime,jdbcType=TIMESTAMP}, 
+      #{shopXid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zking.ssm.model.Shop" >
+    insert into t_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="shopType != null" >
+        shop_type,
+      </if>
+      <if test="shopPrice != null" >
+        shop_price,
+      </if>
+      <if test="shopInven != null" >
+        shop_inven,
+      </if>
+      <if test="shopState != null" >
+        shop_state,
+      </if>
+      <if test="shopImgi != null" >
+        shop_imgi,
+      </if>
+      <if test="shopImgv != null" >
+        shop_imgv,
+      </if>
+      <if test="shopTime != null" >
+        shop_time,
+      </if>
+      <if test="shopXid != null" >
+        shop_xid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopType != null" >
+        #{shopType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPrice != null" >
+        #{shopPrice,jdbcType=REAL},
+      </if>
+      <if test="shopInven != null" >
+        #{shopInven,jdbcType=VARCHAR},
+      </if>
+      <if test="shopState != null" >
+        #{shopState,jdbcType=VARCHAR},
+      </if>
+      <if test="shopImgi != null" >
+        #{shopImgi,jdbcType=BIGINT},
+      </if>
+      <if test="shopImgv != null" >
+        #{shopImgv,jdbcType=VARCHAR},
+      </if>
+      <if test="shopTime != null" >
+        #{shopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopXid != null" >
+        #{shopXid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zking.ssm.model.Shop" >
+    update t_shop
+    <set >
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopType != null" >
+        shop_type = #{shopType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPrice != null" >
+        shop_price = #{shopPrice,jdbcType=REAL},
+      </if>
+      <if test="shopInven != null" >
+        shop_inven = #{shopInven,jdbcType=VARCHAR},
+      </if>
+      <if test="shopState != null" >
+        shop_state = #{shopState,jdbcType=VARCHAR},
+      </if>
+      <if test="shopImgi != null" >
+        shop_imgi = #{shopImgi,jdbcType=BIGINT},
+      </if>
+      <if test="shopImgv != null" >
+        shop_imgv = #{shopImgv,jdbcType=VARCHAR},
+      </if>
+      <if test="shopTime != null" >
+        shop_time = #{shopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopXid != null" >
+        shop_xid = #{shopXid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zking.ssm.model.Shop" >
+    update t_shop
+    set shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_type = #{shopType,jdbcType=VARCHAR},
+      shop_price = #{shopPrice,jdbcType=REAL},
+      shop_inven = #{shopInven,jdbcType=VARCHAR},
+      shop_state = #{shopState,jdbcType=VARCHAR},
+      shop_imgi = #{shopImgi,jdbcType=BIGINT},
+      shop_imgv = #{shopImgv,jdbcType=VARCHAR},
+      shop_time = #{shopTime,jdbcType=TIMESTAMP},
+      shop_xid = #{shopXid,jdbcType=BIGINT}
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+</mapper>
