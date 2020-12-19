@@ -4,7 +4,9 @@ import com.zking.ssm.mapper.ComputerMapper;
 import com.zking.ssm.model.Computer;
 import com.zking.ssm.service.IComputerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ComputerServiceImpl implements IComputerService {
 
     @Autowired

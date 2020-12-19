@@ -4,7 +4,9 @@ import com.zking.ssm.mapper.UserMapper;
 import com.zking.ssm.model.User;
 import com.zking.ssm.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;

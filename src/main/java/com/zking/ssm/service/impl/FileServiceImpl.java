@@ -4,7 +4,9 @@ import com.zking.ssm.mapper.FileMapper;
 import com.zking.ssm.model.File;
 import com.zking.ssm.service.IFileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FileServiceImpl implements IFileService {
 
     @Autowired

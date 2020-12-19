@@ -4,7 +4,9 @@ import com.zking.ssm.mapper.JiaKuMapper;
 import com.zking.ssm.model.JiaKu;
 import com.zking.ssm.service.IJiaKuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class JiaKuServiceImpl implements IJiaKuService {
 
     @Autowired

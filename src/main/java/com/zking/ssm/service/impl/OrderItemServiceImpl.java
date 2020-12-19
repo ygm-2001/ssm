@@ -4,7 +4,9 @@ import com.zking.ssm.mapper.OrderItemMapper;
 import com.zking.ssm.model.OrderItem;
 import com.zking.ssm.service.IOrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OrderItemServiceImpl implements IOrderItemService {
     @Autowired
     private OrderItemMapper orderItemMapper;
