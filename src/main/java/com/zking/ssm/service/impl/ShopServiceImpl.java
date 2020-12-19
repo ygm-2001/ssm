@@ -4,7 +4,9 @@ import com.zking.ssm.mapper.ShopMapper;
 import com.zking.ssm.model.Shop;
 import com.zking.ssm.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ShopServiceImpl implements IShopService {
     @Autowired
     private ShopMapper shopMapper;

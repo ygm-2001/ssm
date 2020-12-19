@@ -142,4 +142,22 @@ public class User {
     public void setXid(Long xid) {
         this.xid = xid;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", locked='" + locked + '\'' +
+                ", money=" + money +
+                ", state='" + state + '\'' +
+                ", identity='" + identity + '\'' +
+                ", vipid=" + vipid +
+                ", img=" + img +
+                ", lv=" + lv +
+                ", xid=" + xid +
+                '}';
+    }
 }

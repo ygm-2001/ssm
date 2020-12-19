@@ -21,11 +21,11 @@
     id, name, password, salt, locked, money, state, identity, vipid, img, lv, xid
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_user
-    where id = #{id,jdbcType=BIGINT}
-  </select>
+  select
+  <include refid="Base_Column_List" />
+  from t_user
+  where id = #{id,jdbcType=BIGINT}
+</select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_user
     where id = #{id,jdbcType=BIGINT}
