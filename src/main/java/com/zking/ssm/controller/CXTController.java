@@ -56,9 +56,16 @@ public class CXTController {
         System.out.println("显示时间1："+hour+":"+min+":"+sec);
         return hour+":"+min+":"+sec;
     }
+
     @RequestMapping("/test3")
     public String test2(){
         return "index";
+    }
+
+    @RequestMapping("/testMain")
+    public void testMain(){
+        System.out.println("我是ygm,我说一句话：更新一次代码！");
+        System.out.println("我是ygm,这是我说的第二句话：虎虎虎！");
     }
 
 }
