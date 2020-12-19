@@ -3,6 +3,8 @@ package com.zking.ssm.mapper;
 import com.zking.ssm.model.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);
@@ -16,4 +18,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    int selectByIdentity(User user);
 }

@@ -21,4 +21,9 @@ public class JiaKuServiceImpl implements IJiaKuService {
     public int insertSelective(JiaKu record) {
         return jiaKuMapper.insertSelective(record);
     }
+
+    @Override
+    public JiaKu listByIdentity(JiaKu jiaKu) {
+        return jiaKuMapper.listByIdentity(jiaKu);
+    }
 }

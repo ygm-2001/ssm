@@ -1,13 +1,20 @@
 package com.zking.ssm.service.impl;
 
+import com.zking.ssm.mapper.JiaKuMapper;
 import com.zking.ssm.mapper.UserMapper;
+import com.zking.ssm.model.JiaKu;
 import com.zking.ssm.model.User;
 import com.zking.ssm.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class UserServiceImpl implements IUserService {
+    @Autowired
+    private JiaKuMapper jiaKuMapper;
     @Autowired
     private UserMapper userMapper;
 
@@ -39,5 +46,17 @@ public class UserServiceImpl implements IUserService {
     @Override
     public int updateByPrimaryKey(User record) {
         return userMapper.updateByPrimaryKey(record);
+    }
+
+    @Transactional
+    @Override
+    public void intoUserAndJiaKu(JiaKu jiaKu,User user) {
+        jiaKuMapper.insert(jiaKu);
+        userMapper.insertSelective(user);
+    }
+
+    @Override
+    public int selectByIdentity(User user) {
+        return userMapper.selectByIdentity(user);
     }
 }

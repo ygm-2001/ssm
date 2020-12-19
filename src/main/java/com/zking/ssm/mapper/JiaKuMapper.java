@@ -8,4 +8,6 @@ public interface JiaKuMapper {
     int insert(JiaKu record);
 
     int insertSelective(JiaKu record);
+
+    JiaKu listByIdentity(JiaKu jiaKu);
 }

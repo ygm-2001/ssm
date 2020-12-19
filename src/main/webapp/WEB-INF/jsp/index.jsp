@@ -24,12 +24,11 @@ ${user}<br/>
     <label>一个简单的注册</label><br/>
     处理信息：${addUser}<br/>
     处理结果：${mgs}<br/>
-    姓名：<input type="text" name="name"/>
-    密码：<input type="password" name="password"/>
+    身份证号：<input type="text" name="jIdentity"/>
+    姓名：<input type="text" name="jName"/>
     <br/>
     <input type="submit"/> <input type="reset" />
 </form>
-
 <%--</details>--%>
 
 </body>
