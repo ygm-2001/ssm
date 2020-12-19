@@ -53,7 +53,7 @@ public class CXTController {
         int hour = minute/60;
         //分钟
         int min = minute%60;
-        System.out.println("显示时间1："+hour+":"+min+":"+sec);
+        System.out.println("显示时间："+hour+":"+min+":"+sec);
         return hour+":"+min+":"+sec;
     }
 
