@@ -65,6 +65,7 @@ public class CXTController {
     @RequestMapping("/testMain")
     public void testMain(){
         System.out.println("我是ygm,我说一句话：更新一次代码！");
+        System.out.println("我是ygm,这是我说的第二句话：虎虎虎！");
     }
 
 }
