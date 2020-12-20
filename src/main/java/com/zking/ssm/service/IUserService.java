@@ -19,6 +19,10 @@ public interface IUserService {
 
     //二个事件共同完成
     void intoUserAndJiaKu(JiaKu jiaKu,User user);
+
     //防重复注册
     int selectByIdentity(User user);
+
+    //根据身份号查询到用户
+    User selectByIdentityUser(User user);
 }

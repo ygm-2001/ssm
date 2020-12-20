@@ -20,17 +20,40 @@
 <mark>根据id查询user用户</mark><br/>
 ${user}<br/>
 <mark>增加一个用户</mark><br/>
-<form action="${ctx}/user/add" method="post">
-    <label>一个简单的注册</label><br/>
-    处理信息：${addUser}<br/>
-    处理结果：${mgs}<br/>
-    身份证号：<input type="text" name="jIdentity"/>
-    姓名：<input type="text" name="jName"/>
+<label>一个简单的注册</label><br/>
+处理信息：${addUser},${updPwdUser}<br/>
+<div align="center">
+    <label class="return">处理结果：${mgs}</label><br/>
+</div>
+<details>
+    <summary>测试user注册api</summary>
+    <form action="${ctx}/user/add" method="post">
+        身份证号：<input type="text" name="jIdentity"/><br/>
+        姓名：<input type="text" name="jName"/>
+        <br/>
+        <input type="submit"/> <input type="reset" />
+    </form>
+</details>
+
+<form action="${ctx}/user/updPwd" method="post">
+    身份证号：<input type="text" name="identity"/><br/>
+    旧密码：<input type="text" name="oldPwd"/><br/>
+    新密码：<input type="text" name="newPwd"/>
     <br/>
     <input type="submit"/> <input type="reset" />
 </form>
+
 <%--</details>--%>
 
 </body>
-
+<style>
+    mark{
+        background-color: #358046;
+        color: #fffbe0;
+    }
+    .return{
+        font-size: 30px;
+        font-weight: bolder;
+    }
+</style>
 </html>

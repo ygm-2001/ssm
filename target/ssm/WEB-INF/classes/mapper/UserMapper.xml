@@ -29,6 +29,9 @@
   <select id="selectByIdentity" resultType="java.lang.Integer">
     select count(*) from t_user where identity = #{identity}
   </select>
+  <select id="selectByIdentityUser" resultType="com.zking.ssm.model.User">
+    select * from t_user where identity = #{identity}
+  </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_user
