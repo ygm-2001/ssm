@@ -22,4 +22,6 @@ public interface UserMapper {
     int selectByIdentity(User user);
 
     User selectByIdentityUser(User user);
+
+    User selectByIdentityAndPwd(User user);
 }

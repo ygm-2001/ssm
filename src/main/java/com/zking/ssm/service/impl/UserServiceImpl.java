@@ -64,4 +64,9 @@ public class UserServiceImpl implements IUserService {
     public User selectByIdentityUser(User user) {
         return userMapper.selectByIdentityUser(user);
     }
+
+    @Override
+    public User selectByIdentityAndPwd(User user) {
+        return userMapper.selectByIdentityAndPwd(user);
+    }
 }

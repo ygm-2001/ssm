@@ -32,8 +32,10 @@
   <select id="selectByIdentityUser" resultType="com.zking.ssm.model.User">
     select * from t_user where identity = #{identity}
   </select>
-
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="selectByIdentityAndPwd" resultType="com.zking.ssm.model.User">
+    select * from t_user where identity = #{identity} and password = #{password}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_user
     where id = #{id,jdbcType=BIGINT}
   </delete>

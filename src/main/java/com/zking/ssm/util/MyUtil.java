@@ -3,6 +3,7 @@ package com.zking.ssm.util;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -98,21 +99,61 @@ public class MyUtil {
         return null;
     }
 
-//    随机字段：
-//    0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()-_=+\|[]{};:'",.<>/?
-
-    /*
-    * 获取当前时间代码Date
-    * */
-//    Date date = new Date();
-//
-//    String year = String.format("%tY", date);
-//
-//    String month = String.format("%tB", date);
-//
-//    String day = String.format("%te", date);
-//
-//        System.out.println("今天是："+year+"-"+month+"-"+day);
+    /**
+     * 通过身份证件判断是否成年
+     * 前提一定要正确的身份证号信息
+     * @param identity
+     * @return
+     */
+    public static boolean isAdult(String identity){
+        boolean flag = true;
+        String pattern = "^[1-9]\\d{5}[1-9]\\d{3}((0[1-9])|(1[0-2]))(0[1-9]|([1|2][0-9])|3[0-1])((\\d{4})|\\d{3}X)$";
+        boolean isMatch = Pattern.matches(pattern, identity);
+        //有效身份证
+        if(isMatch){
+            //截取身份证上的有效信息430527 20011017 6976
+            //截取出生年月日
+            //String转int
+//            my年
+            int myYear =Integer.parseInt(identity.toString().substring(6,10));
+//            my月
+            int myMonth =Integer.parseInt(identity.toString().substring(10,12));
+//            my日
+            int myDate =Integer.parseInt(identity.toString().substring(12,14));
+            //获取到当前年月日
+            Calendar c = Calendar.getInstance();
+//            年
+            int year = c.get(Calendar.YEAR);
+//            月(加1，是内部api是从0~11计算的所以不必感到疑惑)
+            int month = c.get(Calendar.MONTH)+1;
+//            日
+            int date = c.get(Calendar.DATE);
+            //            2019 11 18    2020 12 20
+            //            2001 12 17    2002 12 22
+            //            0018 01 01    0018 00 -02
+//          首先my年-年
+            if((year-myYear)>18){
+                flag = true;
+            }else if((year-myYear)==18){
+                if((month-myMonth)>0){
+                    flag = true;
+                }else if((month-myMonth)==0){
+                    if((date-myDate)>0 || (date-myDate)==0){
+                        flag = true;
+                    }else{
+                        flag = false;
+                    }
+                }else{
+                    flag = false;
+                }
+            }else{
+                flag = false;
+            }
+        }else{
+            flag = false;
+        }
+        return flag;
+    }
 
     /**
      * 测试*代码
@@ -123,6 +164,21 @@ public class MyUtil {
         System.out.println("第①种："+MyUtil.getComplexTime());
         System.out.println("第②种："+MyUtil.getDefaultTime());
         System.out.println("第③种："+MyUtil.getSimpleTime());
+//        String类型获取时间
+        Date date = new Date();
+        /**
+         * %tB 或 %tb 十二月
+         *
+         */
+        String year = String.format("%tY", date);
+        String month = String.format("%tm", date);
+        String day = String.format("%te", date);
+        System.out.println("今天是："+year+"-"+month+"-"+day);
+//
+        System.out.println("是否成年输出结果："+MyUtil.isAdult("430527200110176976"));
+        System.out.println("是否成年输出结果："+MyUtil.isAdult("430527200309091814"));
+        System.out.println("是否成年输出结果："+MyUtil.isAdult("430527200212206976"));
+        System.out.println("是否成年输出结果："+MyUtil.isAdult("430527200212206976"));
 
 
     }

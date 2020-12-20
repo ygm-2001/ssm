@@ -4,6 +4,7 @@ import com.zking.ssm.model.JiaKu;
 import com.zking.ssm.model.User;
 import com.zking.ssm.service.IJiaKuService;
 import com.zking.ssm.service.IUserService;
+import com.zking.ssm.util.MyUtil;
 import com.zking.ssm.util.PasswordHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,8 +56,11 @@ public class UserController {
                 String pattern = "^[1-9]\\d{5}[1-9]\\d{3}((0[1-9])|(1[0-2]))(0[1-9]|([1|2][0-9])|3[0-1])((\\d{4})|\\d{3}X)$";
                 boolean isMatch = Pattern.matches(pattern, line);
                 if(isMatch){
-                    //保存用户身份信息与假库中
-                    JiaKu ju = iJiaKuService.listByIdentity(jiaKu);
+//                    判断是否成年
+                    boolean adult = MyUtil.isAdult(line);
+                    if(adult){
+                        //保存用户身份信息与假库中
+                        JiaKu ju = iJiaKuService.listByIdentity(jiaKu);
                         if(null==ju){
                             //信息匹配中
                             User u = new User();
@@ -83,6 +87,9 @@ public class UserController {
                                 mgs="已注册";
                             }
                         }
+                    }else{
+                        mgs="未成年无法注册，好好读书，敲代码";
+                    }
                 }else{
                   mgs="无效身份证";
                 }
@@ -169,6 +176,76 @@ public class UserController {
             mgs="身份号获取失败"+user.getIdentity();
         }
         model.addAttribute("mgs",mgs);
+        return "index";
+    }
+
+    @RequestMapping("/login")
+    public String loginUser(Model model,User user){
+        String mgs = "无操作";
+//        首先就是防空null,身份证号，以及密码
+        if(null!=user.getIdentity()&&!"".equals(user.getIdentity())){
+            if(null!=user.getPassword()&&!"".equals(user.getPassword())){
+//                其次，判断身份证号，是否成年
+                boolean adult = MyUtil.isAdult(user.getIdentity());
+                if(adult){
+//                    再次，判断用户是否被注册
+                    User usr = userService.selectByIdentityUser(user);
+                    if(usr!=null){
+//                        然后，判断是否用户被激活了
+                        if(null!=usr.getState()&& !"未激活".equals(usr.getState())){
+//                            需要对密码，是否进行了盐加密
+                            if(null!=usr.getSalt()){
+//                                进行了盐加密
+                                boolean b = PasswordHelper.checkCredentials(user.getPassword(), usr.getSalt(), usr.getPassword());
+                                if(b){
+//                                    成功后修改状态-->已上机
+                                    usr.setState("已上机");
+                                    int i = userService.updateByPrimaryKeySelective(usr);
+                                    if(1==i){
+                                        User cxusr = userService.selectByPrimaryKey(usr.getId());
+                                        model.addAttribute("updStatusUser",cxusr);
+                                        mgs="修改状态成功（已上机）";
+                                    }else{
+                                        mgs="修改用户状态失败（检查SQL）";
+                                    }
+                                }else{
+                                    mgs="盐密码匹配失败，'傻眼'了吧";
+                                }
+                            }else{
+//                                没有进行盐加密的
+                                if(usr.getPassword().equals(user.getPassword())){
+//                                    成功后修改状态-->已上机
+                                    usr.setState("已上机");
+                                    int i = userService.updateByPrimaryKeySelective(usr);
+                                    if(1==i){
+                                        User cxusr = userService.selectByPrimaryKey(usr.getId());
+                                        model.addAttribute("updStatusUser",cxusr);
+                                        mgs="修改状态成功（已上机）";
+
+                                    }else{
+                                        mgs="修改用户状态失败（检查SQL）";
+                                    }
+                                }else{
+                                    mgs="密码匹配失败，仔细是一种态度";
+                                }
+                            }
+                        }else{
+                            mgs="用户状态："+usr.getState();
+                        }
+                    }else{
+                        mgs="未注册，你可以选择快速注册（目前：不支持快速注册）";
+                    }
+                }else{
+                    mgs="操作失败，可能（①无效身份证，②未成年）";
+                }
+            }else{
+                mgs="密码不能为空";
+            }
+        }else{
+            mgs="身份ID不能为空";
+        }
+
+        model.addAttribute("mgs", mgs);
         return "index";
     }
 

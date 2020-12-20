@@ -25,4 +25,8 @@ public interface IUserService {
 
     //根据身份号查询到用户
     User selectByIdentityUser(User user);
+
+    //登录接口需要身份证号，密码匹配成功才能登录
+    User selectByIdentityAndPwd(User user);
+
 }
