@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.regex.Pattern;
 
@@ -30,6 +31,15 @@ public class UserController {
         User u = userService.selectByPrimaryKey(user.getId());
         model.addAttribute("user",u);
         return "index";
+    }
+
+    @RequestMapping("/listById")
+    @ResponseBody
+    public User list(Model model,User user){
+        System.out.println("查询（id）11");
+        User u = userService.selectByPrimaryKey(user.getId());
+        model.addAttribute("user",u);
+        return u;
     }
 
     @RequestMapping("/add")

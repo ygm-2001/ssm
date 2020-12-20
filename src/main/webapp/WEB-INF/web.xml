@@ -32,6 +32,26 @@
     <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
   </listener>
 
+  <!-- 配置tomcat允许跨域访问 -->
+  <filter>
+    <filter-name>CorsFilter</filter-name>
+    <filter-class>com.zking.ssm.util.CorsFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CorsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- 3. 中文处理 (vue)-->
+  <filter>
+    <filter-name>EncodingFiter</filter-name>
+    <filter-class>com.zking.ssm.util.CorsFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EncodingFiter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <!--配置中文乱码过滤器-->
   <filter>
     <filter-name>encodingFilter</filter-name>

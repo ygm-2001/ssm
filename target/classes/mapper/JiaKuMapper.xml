@@ -30,4 +30,7 @@
       </if>
     </trim>
   </insert>
+  <select id="listByIdentity" resultType="com.zking.ssm.model.JiaKu">
+    select * from t_jiaKu where j_identity = #{jIdentity}
+  </select>
 </mapper>
