@@ -51,7 +51,15 @@
       </if>
         lv=2 order by id desc
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <select id="selectUserByVip" resultType="com.zking.ssm.model.User">
+    select * from t_user
+    where 1=1
+    <foreach collection="vipId" item="id" open="and vipid in (" close=")" separator="," >
+      #{id}
+    </foreach>
+    and lv=2 order by vipid
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_user
     where id = #{id,jdbcType=BIGINT}
   </delete>

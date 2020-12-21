@@ -1,5 +1,6 @@
 package com.zking.ssm.service.impl;
 
+import com.zking.ssm.dto.UserDto;
 import com.zking.ssm.mapper.JiaKuMapper;
 import com.zking.ssm.mapper.UserMapper;
 import com.zking.ssm.model.JiaKu;
@@ -76,5 +77,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public List<User> selectUserAllPager(User user, PageBean pageBean) {
         return userMapper.selectUserAllPager(user);
+    }
+
+    @Override
+    public List<User> selectUserByVipPager(UserDto userDto, PageBean pageBean) {
+        return userMapper.selectUserByVip(userDto);
     }
 }

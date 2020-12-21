@@ -1,5 +1,7 @@
 package com.zking.ssm.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.zking.ssm.dto.UserDto;
 import com.zking.ssm.model.JiaKu;
 import com.zking.ssm.model.User;
 import com.zking.ssm.model.UserVip;
@@ -378,9 +380,32 @@ public class UserController {
             userVip.setVid(user.getVipid());
             UserVip vip = iUserVipService.selectVIP(userVip);
             model.addAttribute("userVip",vip);
-            mgs="尊敬的"+vip.getVipName()+"欢迎来到强强网咖2.0";
+            mgs="尊敬的 "+vip.getVipName()+" 欢迎来到强强网咖2.0";
         }else{
             mgs="查看详情失败，vip："+user.getVipid();
+        }
+        model.addAttribute("mgs",mgs);
+        return "index";
+    }
+
+    @RequestMapping("/checkVipUser")
+    public String checkVipUser(Model model, UserDto userDto,HttpServletRequest req){
+        String mgs= "无操作";
+        if(null!=userDto.getVipId()){
+            PageBean pageBean = new PageBean();
+            //        初始5条数据
+            pageBean.setRows(5);
+            pageBean.initPageBean(req,pageBean);
+            List<User> users = userService.selectUserByVipPager(userDto,pageBean);
+            model.addAttribute("listUserTab",users);
+            boolean pagination = pageBean.isPagination();
+            if(pagination){
+                mgs="尊敬的会员朋友们:查询共计"+pageBean.getTotal()+"条";
+            }else{
+                mgs="未启用分页：（默认查询所有）"+pageBean.isPagination();
+            }
+        }else{
+            mgs="查看详情失败，vip："+userDto.getVipId();
         }
         model.addAttribute("mgs",mgs);
         return "index";

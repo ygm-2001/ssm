@@ -1,5 +1,6 @@
 package com.zking.ssm.mapper;
 
+import com.zking.ssm.dto.UserDto;
 import com.zking.ssm.model.User;
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +27,7 @@ public interface UserMapper {
     User selectByIdentityAndPwd(User user);
 
     List<User> selectUserAllPager(User user);
+
+    List<User> selectUserByVip(UserDto userDto);
 
 }

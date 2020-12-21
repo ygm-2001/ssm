@@ -137,7 +137,8 @@ ${user}<br/>
                     <a href="${ctx}/user/listUserBy?vipid=2"><button>黄金会员</button></a>
                         <a href="${ctx}/user/listUserBy?vipid=3"><button>青铜会员</button></a>
                             <a href="${ctx}/user/listUserBy?vipid=4"><button>黑铁会员</button></a>
-
+   <br/>
+    <a href="${ctx}/user/checkVipUser?vipId=1,2,3"><button>会员用户</button></a>
     <table>
         <tr class="tab-header">
             <td>编号</td>

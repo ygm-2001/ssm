@@ -1,5 +1,6 @@
 package com.zking.ssm.service;
 
+import com.zking.ssm.dto.UserDto;
 import com.zking.ssm.model.JiaKu;
 import com.zking.ssm.model.User;
 import com.zking.ssm.util.PageBean;
@@ -34,6 +35,9 @@ public interface IUserService {
 
     //查询所有user，（支持分页）
     List<User> selectUserAllPager(User user,PageBean pageBean);
+
+    //查询开通vip的用户
+    List<User> selectUserByVipPager(UserDto userDto,PageBean pageBean);
 
 
 }
