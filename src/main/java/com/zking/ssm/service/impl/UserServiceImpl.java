@@ -5,10 +5,13 @@ import com.zking.ssm.mapper.UserMapper;
 import com.zking.ssm.model.JiaKu;
 import com.zking.ssm.model.User;
 import com.zking.ssm.service.IUserService;
+import com.zking.ssm.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional
 @Service
@@ -68,5 +71,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User selectByIdentityAndPwd(User user) {
         return userMapper.selectByIdentityAndPwd(user);
+    }
+
+    @Override
+    public List<User> selectUserAllPager(User user, PageBean pageBean) {
+        return userMapper.selectUserAllPager(user);
     }
 }

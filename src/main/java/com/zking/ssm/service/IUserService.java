@@ -2,7 +2,10 @@ package com.zking.ssm.service;
 
 import com.zking.ssm.model.JiaKu;
 import com.zking.ssm.model.User;
+import com.zking.ssm.util.PageBean;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 public interface IUserService {
     int deleteByPrimaryKey(Long id);
@@ -28,5 +31,9 @@ public interface IUserService {
 
     //登录接口需要身份证号，密码匹配成功才能登录
     User selectByIdentityAndPwd(User user);
+
+    //查询所有user，（支持分页）
+    List<User> selectUserAllPager(User user,PageBean pageBean);
+
 
 }

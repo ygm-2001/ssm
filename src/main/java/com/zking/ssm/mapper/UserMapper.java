@@ -24,4 +24,7 @@ public interface UserMapper {
     User selectByIdentityUser(User user);
 
     User selectByIdentityAndPwd(User user);
+
+    List<User> selectUserAllPager(User user);
+
 }

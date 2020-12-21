@@ -5,13 +5,17 @@ import com.zking.ssm.model.User;
 import com.zking.ssm.service.IJiaKuService;
 import com.zking.ssm.service.IUserService;
 import com.zking.ssm.util.MyUtil;
+import com.zking.ssm.util.PageBean;
 import com.zking.ssm.util.PasswordHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -26,6 +30,11 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @ModelAttribute
+    public void initUser(HttpServletRequest req){
+        System.out.println("UserController初始化中......");
+    }
 
     @RequestMapping("/listBy")
     public String listById(Model model,User user){
@@ -249,5 +258,99 @@ public class UserController {
         return "index";
     }
 
+    @RequestMapping("/actStatus")
+    public String actUserStatus(Model model,User user){
+        String mgs = "未操作";
+        if(null!=user.getIdentity() && !"".equals(user.getIdentity())){
+            //      一个按钮激活事件，将用户状态修改为已激活状态
+//        这个按钮定义在查询中，根据具体的身份证号激活指定的用户
+            User usr = userService.selectByIdentityUser(user);
+            usr.setState("已激活");
+            int i = userService.updateByPrimaryKeySelective(usr);
+            if(1==i){
+                User auser = userService.selectByPrimaryKey(usr.getId());
+                model.addAttribute("actUser", auser);
+                mgs="用户激活成功";
+            }else{
+                mgs="激活失败"+usr.getId();
+            }
+        }else{
+            mgs="获取身份证号失败";
+        }
+        model.addAttribute("mgs",mgs);
+        return "index";
+    }
+
+    @RequestMapping("/actStatusDown")
+    public String actStatusDown(Model model,User user){
+        String mgs = "未操作";
+        if(null!=user.getIdentity() && !"".equals(user.getIdentity())){
+            //      一个按钮激活事件，将用户状态修改为已激活状态
+//        这个按钮定义在查询中，根据具体的身份证号激活指定的用户
+            User usr = userService.selectByIdentityUser(user);
+            usr.setState("未激活");
+            int i = userService.updateByPrimaryKeySelective(usr);
+            if(1==i){
+                User auser = userService.selectByPrimaryKey(usr.getId());
+                model.addAttribute("actUser", auser);
+                mgs="操作成功，欢迎下次使用";
+            }else{
+                mgs="操作失败，获取Id:"+usr.getId();
+            }
+        }else{
+            mgs="获取身份证号失败";
+        }
+        model.addAttribute("mgs",mgs);
+        return "index";
+    }
+
+    @RequestMapping("/listUser")
+    public String listUser(Model model,User user,HttpServletRequest req){
+//       查询所有（支持模糊查询，字段为，名字，身份证号）
+        String mgs = "未操作";
+        PageBean pageBean = new PageBean();
+//        初始5条数据
+        pageBean.setRows(5);
+        pageBean.initPageBean(req,pageBean);
+//        这里不分页
+        pageBean.setPagination(false);
+        List<User> listUser = userService.selectUserAllPager(user, pageBean);
+//        查询用户内容
+        if(null!=listUser && 0!=listUser.size()){
+            model.addAttribute("listUserAll",listUser);
+            boolean pagination = pageBean.isPagination();
+            if(pagination){
+                mgs="查询共计"+pageBean.getTotal()+"条";
+            }else{
+                mgs="未启用分页：（默认查询所有）"+pageBean.isPagination();
+            }
+        }else{
+            mgs="网吧刚开，没有忠实用户";
+        }
+        model.addAttribute("mgs",mgs);
+        return "index";
+    }
+
+    @RequestMapping("/list")
+    public String actUserStatusDown(Model model,User user,HttpServletRequest req){
+//       查询所有（支持模糊查询，字段为，名字，身份证号）
+        String mgs = "未操作";
+        PageBean pageBean = new PageBean();
+//        初始5条数据
+        pageBean.setRows(5);
+        pageBean.initPageBean(req,pageBean);
+//        这里不分页
+        pageBean.setPagination(false);
+        List<User> listUser = userService.selectUserAllPager(user, pageBean);
+//        查询用户内容
+        if(null!=listUser && 0!=listUser.size()){
+            model.addAttribute("listUserAll",listUser);
+            mgs="查询共计"+pageBean.getTotal()+"条"+pageBean.isPagination();
+        }else{
+            mgs="网吧刚开，没有忠实用户";
+        }
+        model.addAttribute("mgs",mgs);
+        return "index";
+    }
 
 }
