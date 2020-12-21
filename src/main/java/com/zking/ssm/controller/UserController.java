@@ -2,8 +2,10 @@ package com.zking.ssm.controller;
 
 import com.zking.ssm.model.JiaKu;
 import com.zking.ssm.model.User;
+import com.zking.ssm.model.UserVip;
 import com.zking.ssm.service.IJiaKuService;
 import com.zking.ssm.service.IUserService;
+import com.zking.ssm.service.IUserVipService;
 import com.zking.ssm.util.MyUtil;
 import com.zking.ssm.util.PageBean;
 import com.zking.ssm.util.PasswordHelper;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -31,9 +34,15 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IUserVipService iUserVipService;
+
     @ModelAttribute
     public void initUser(HttpServletRequest req){
         System.out.println("UserController初始化中......");
+//        初始化所有用户card-->vip
+        List<UserVip> userVips = iUserVipService.selectVIPALL();
+        req.setAttribute("VIP",userVips);
     }
 
     @RequestMapping("/listBy")
@@ -304,7 +313,7 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping("/listUser")
+    @RequestMapping("/listUserNoPager")
     public String listUser(Model model,User user,HttpServletRequest req){
 //       查询所有（支持模糊查询，字段为，名字，身份证号）
         String mgs = "未操作";
@@ -331,23 +340,47 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping("/list")
+    @RequestMapping("/listUserBy")
     public String actUserStatusDown(Model model,User user,HttpServletRequest req){
-//       查询所有（支持模糊查询，字段为，名字，身份证号）
+        //       查询所有（支持模糊查询，字段为，名字，身份证号）
         String mgs = "未操作";
-        PageBean pageBean = new PageBean();
-//        初始5条数据
-        pageBean.setRows(5);
-        pageBean.initPageBean(req,pageBean);
-//        这里不分页
-        pageBean.setPagination(false);
-        List<User> listUser = userService.selectUserAllPager(user, pageBean);
-//        查询用户内容
-        if(null!=listUser && 0!=listUser.size()){
-            model.addAttribute("listUserAll",listUser);
-            mgs="查询共计"+pageBean.getTotal()+"条"+pageBean.isPagination();
+        //        这个api,目前只能接受一个字段的~模糊查询
+        try {
+            PageBean pageBean = new PageBean();
+        //        初始5条数据
+            pageBean.setRows(5);
+            pageBean.initPageBean(req,pageBean);
+            List<User> listUser = userService.selectUserAllPager(user, pageBean);
+        //        查询用户内容
+            if(null!=listUser && 0!=listUser.size()){
+                model.addAttribute("listUserTab",listUser);
+                boolean pagination = pageBean.isPagination();
+                if(pagination){
+                    mgs="查询共计"+pageBean.getTotal()+"条";
+                }else{
+                    mgs="未启用分页：（默认查询所有）"+pageBean.isPagination();
+                }
+            }else{
+                mgs="没有查询到用户";
+            }
+        }catch (Exception e){
+            mgs="亲爱的用户:目前只能接受一个字段的~模糊查询，开发者正在努力的梳头发中...";
+        }
+        model.addAttribute("mgs",mgs);
+        return "index";
+    }
+
+    @RequestMapping("/checkVip")
+    public String checkVip(Model model,User user,UserVip userVip){
+        String mgs= "无操作";
+        if(null!=user.getVipid()){
+            //        将user表中的vipid-->赋给VIP表中查看，具体字段！
+            userVip.setVid(user.getVipid());
+            UserVip vip = iUserVipService.selectVIP(userVip);
+            model.addAttribute("userVip",vip);
+            mgs="尊敬的"+vip.getVipName()+"欢迎来到强强网咖2.0";
         }else{
-            mgs="网吧刚开，没有忠实用户";
+            mgs="查看详情失败，vip："+user.getVipid();
         }
         model.addAttribute("mgs",mgs);
         return "index";

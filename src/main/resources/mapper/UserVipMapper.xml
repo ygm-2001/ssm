@@ -30,4 +30,10 @@
       </if>
     </trim>
   </insert>
+    <select id="selectVIP" resultType="com.zking.ssm.model.UserVip">
+      select * from t_user_vip where vid = #{vid}
+    </select>
+  <select id="selectVIPALL" resultType="com.zking.ssm.model.UserVip">
+    select * from t_user_vip
+  </select>
 </mapper>
