@@ -1,5 +1,7 @@
 package com.zking.ssm.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.zking.ssm.dto.UserDto;
 import com.zking.ssm.model.JiaKu;
@@ -8,6 +10,7 @@ import com.zking.ssm.model.UserVip;
 import com.zking.ssm.service.IJiaKuService;
 import com.zking.ssm.service.IUserService;
 import com.zking.ssm.service.IUserVipService;
+import com.zking.ssm.util.JsonData;
 import com.zking.ssm.util.MyUtil;
 import com.zking.ssm.util.PageBean;
 import com.zking.ssm.util.PasswordHelper;
@@ -20,7 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 
@@ -48,20 +53,32 @@ public class UserController {
     }
 
     @RequestMapping("/listBy")
-    public String listById(Model model,User user){
+    public String listById(Model model,User user) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<String> json = new ArrayList<String>();
+        String mgs = "未操作";
         System.out.println("查询（id）");
         User u = userService.selectByPrimaryKey(user.getId());
+        mgs="查询完毕";
+        json.add(mgs);
+        String s = mapper.writeValueAsString(json);
         model.addAttribute("user",u);
         return "index";
     }
 
     @RequestMapping("/listById")
     @ResponseBody
-    public User list(Model model,User user){
+    public JsonData list(Model model, User user) throws JsonProcessingException {
+//        ----------
+        JsonData jsonData = new JsonData();
+        String mgs = "未操作";
         System.out.println("查询（id）11");
         User u = userService.selectByPrimaryKey(user.getId());
-        model.addAttribute("user",u);
-        return u;
+        mgs="查询完毕";
+//        ---------
+        jsonData.setMessage(mgs);
+        jsonData.setResult(u);
+        return jsonData;
     }
 
     @RequestMapping("/add")
@@ -213,41 +230,48 @@ public class UserController {
                     if(usr!=null){
 //                        然后，判断是否用户被激活了
                         if(null!=usr.getState()&& !"未激活".equals(usr.getState())){
+//           注意：                 加一步，判断卡中是否还有余额
+//                            如果余额为0则，无法登陆 0 or 小于0 都不能登陆
+                            if(null!=usr.getMoney() && 0<usr.getMoney()){
 //                            需要对密码，是否进行了盐加密
-                            if(null!=usr.getSalt()){
+                                if(null!=usr.getSalt()){
 //                                进行了盐加密
-                                boolean b = PasswordHelper.checkCredentials(user.getPassword(), usr.getSalt(), usr.getPassword());
-                                if(b){
+                                    boolean b = PasswordHelper.checkCredentials(user.getPassword(), usr.getSalt(), usr.getPassword());
+                                    if(b){
 //                                    成功后修改状态-->已上机
-                                    usr.setState("已上机");
-                                    int i = userService.updateByPrimaryKeySelective(usr);
-                                    if(1==i){
-                                        User cxusr = userService.selectByPrimaryKey(usr.getId());
-                                        model.addAttribute("updStatusUser",cxusr);
-                                        mgs="修改状态成功（已上机）";
+                                        usr.setState("已上机");
+                                        int i = userService.updateByPrimaryKeySelective(usr);
+                                        if(1==i){
+                                            User cxusr = userService.selectByPrimaryKey(usr.getId());
+                                            model.addAttribute("updStatusUser",cxusr);
+                                            mgs="修改状态成功（已上机）";
+                                        }else{
+                                            mgs="修改用户状态失败（检查SQL）";
+                                        }
                                     }else{
-                                        mgs="修改用户状态失败（检查SQL）";
+                                        mgs="盐密码匹配失败，'傻眼'了吧";
                                     }
                                 }else{
-                                    mgs="盐密码匹配失败，'傻眼'了吧";
-                                }
-                            }else{
 //                                没有进行盐加密的
-                                if(usr.getPassword().equals(user.getPassword())){
+                                    if(usr.getPassword().equals(user.getPassword())){
 //                                    成功后修改状态-->已上机
-                                    usr.setState("已上机");
-                                    int i = userService.updateByPrimaryKeySelective(usr);
-                                    if(1==i){
-                                        User cxusr = userService.selectByPrimaryKey(usr.getId());
-                                        model.addAttribute("updStatusUser",cxusr);
-                                        mgs="修改状态成功（已上机）";
-
+                                        usr.setState("已上机");
+                                        int i = userService.updateByPrimaryKeySelective(usr);
+                                        if(1==i){
+                                            User cxusr = userService.selectByPrimaryKey(usr.getId());
+                                            model.addAttribute("updStatusUser",cxusr);
+                                            mgs="修改状态成功（已上机）";
+                                        }else{
+                                            mgs="修改用户状态失败（检查SQL）";
+                                        }
                                     }else{
-                                        mgs="修改用户状态失败（检查SQL）";
+                                        mgs="密码匹配失败，仔细是一种态度";
                                     }
-                                }else{
-                                    mgs="密码匹配失败，仔细是一种态度";
                                 }
+                            }else if(usr.getMoney()<0){
+                                mgs="余额已经透支了"+usr.getMoney()+"元";
+                            }else{
+                                mgs="余额不足:"+usr.getMoney()+"元";
                             }
                         }else{
                             mgs="用户状态："+usr.getState();

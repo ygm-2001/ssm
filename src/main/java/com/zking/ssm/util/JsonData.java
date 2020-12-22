@@ -21,7 +21,7 @@ public class JsonData extends HashMap<String, Object> implements Serializable {
 
 	public JsonData() {
 		super();
-		this.put(CODE_KEY, 0);// 默认操作成功
+		this.put(CODE_KEY, 200);// 默认操作成功
 		this.put(TS_KEY, System.currentTimeMillis());
 	}
 
