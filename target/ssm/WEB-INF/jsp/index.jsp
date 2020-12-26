@@ -11,12 +11,102 @@
     <summary>页面说明</summary>
     <h1>欢迎进入index.jsp</h1>
     <h2>【本次jsp页面主要用于测试，正式页面位于Vue】</h2>
+    <div class="fuzzy">
+        <span>
+            测试内容模糊化
+        </span>
+    </div>
+
 </details>
+
+<%--测试按钮--%>
+<div>
+    <a href="${ctx}/computer/startCount4">
+        <button>测试quartz</button>
+    </a>
+</div>
 
 <div align="center">
     <h3>正式测试</h3>
 </div>
 <div align="right"><a href="${ctx}"><button>刷新本页面</button></a></div>
+
+<%--  用户的查询，模糊查询，分页查询，以及集合以上一些按钮状态的改变--%>
+<%--<details>--%>
+<%--    <summary>测试用户表单的显示（分页信息，注意：'需要查询的是用户，网管就不要安排出来了'）</summary>--%>
+<div align="center">
+    <%-- 模糊按钮查询对象--%>
+    <%--    需要实现的是按钮--%>
+    <%--    按钮名称     关键字--%>
+    <%--state--%>
+    <%--①    未激活    '未激活'--%>
+    <%--②    已激活    '已激活'--%>
+    <%--③    已上机    '已上机'--%>
+    <%--vipid--%>
+    <%--①    小白        4--%>
+    <%--②    高级用户   3，2，1--%>
+    <%--③    白金        3--%>
+    <%--④    黄金        2--%>
+    <%--⑤    钻石        1--%>
+    <a href="${ctx}/user/listUserBy?state=未激活"><button>未激活</button></a>
+    <a href="${ctx}/user/listUserBy?state=已激活"><button>已激活</button></a>
+    <a href="${ctx}/user/listUserBy?state=已上机"><button>已上机</button></a>
+    <br/>
+    <a href="${ctx}/user/listUserBy?vipid=1"><button>铂金会员</button></a>
+    <a href="${ctx}/user/listUserBy?vipid=2"><button>黄金会员</button></a>
+    <a href="${ctx}/user/listUserBy?vipid=3"><button>青铜会员</button></a>
+    <a href="${ctx}/user/listUserBy?vipid=4"><button>黑铁会员</button></a>
+    <br/>
+    <a href="${ctx}/user/checkVipUser?vipId=1,2,3"><button>会员用户</button></a>
+    <table>
+        <tr class="tab-header">
+            <td>编号</td>
+            <td>用户名</td>
+            <td>余额</td>
+            <td>状态</td>
+            <td>会员等级</td>
+            <td>operation操作</td>
+        </tr>
+        <c:forEach items="${listUserTab}" var="u">
+            <tr>
+                <td>${u.id}</td>
+                <td>${u.name}</td>
+                <td>${u.money}</td>
+                <td>${u.state}</td>
+                <td>
+                    <a href="${ctx}/user/checkVip?vipid=${u.vipid}"><button>查看会员</button></a>
+                </td>
+                <td>
+                    operation操作
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
+<%--</details>--%>
+
+
+<%--测试的盒子--%>
+<details>
+    <summary>测试的一个盒子</summary>
+<div style="box-shadow:0 0 0 6px rgba(0, 0, 0, 0.2);">
+    <div align="center" class="ctx-box">
+        <%--    这个是一个测试一个好玩的（修改背景颜色，但是效果只能维持Tomcat启动这一次）--%>
+        <details>
+            <summary>修改背景颜色</summary>
+            <style style="display:block;" contentEditable>
+                .ctx-box { background: #30801f; }
+            </style>
+        </details>
+
+            <div style="box-shadow:0 0 0 6px rgba(0, 0, 0, 0.2);">
+                ----------
+            </div>
+
+    </div>
+</div>
+</details>
+
 <%--关于用户的一些api测试--%>
 <%--<details>--%>
 <%--    <summary>User测试相关内容</summary>--%>
@@ -72,8 +162,8 @@ ${user}<br/>
 </details>
 
 <%--  用户激活api测试--%>
-<details>
-    <summary>测试user未激活api<-->已激活<-->已上机</summary>
+<%--<details>--%>
+<%--    <summary>测试user未激活api<-->已激活<-->已上机</summary>--%>
     <div align="center">
         <%--注意这里不嫩写在form，不然action将是form的--%>
 <%--        注意：同时查获得是用户信息 2--%>
@@ -110,61 +200,10 @@ ${user}<br/>
                 </c:if>
             </form>
     </div>
-</details>
-
-<%--  用户的查询，模糊查询，分页查询，以及集合以上一些按钮状态的改变--%>
-<%--<details>--%>
-<%--    <summary>测试用户表单的显示（分页信息，注意：'需要查询的是用户，网管就不要安排出来了'）</summary>--%>
-<div align="center">
-<%-- 模糊按钮查询对象--%>
-<%--    需要实现的是按钮--%>
-<%--    按钮名称     关键字--%>
-<%--state--%>
-<%--①    未激活    '未激活'--%>
-<%--②    已激活    '已激活'--%>
-<%--③    已上机    '已上机'--%>
-<%--vipid--%>
-<%--①    小白        4--%>
-<%--②    高级用户   3，2，1--%>
-<%--③    白金        3--%>
-<%--④    黄金        2--%>
-<%--⑤    钻石        1--%>
-    <a href="${ctx}/user/listUserBy?state=未激活"><button>未激活</button></a>
-        <a href="${ctx}/user/listUserBy?state=已激活"><button>已激活</button></a>
-            <a href="${ctx}/user/listUserBy?state=已上机"><button>已上机</button></a>
-    <br/>
-                <a href="${ctx}/user/listUserBy?vipid=1"><button>铂金会员</button></a>
-                    <a href="${ctx}/user/listUserBy?vipid=2"><button>黄金会员</button></a>
-                        <a href="${ctx}/user/listUserBy?vipid=3"><button>青铜会员</button></a>
-                            <a href="${ctx}/user/listUserBy?vipid=4"><button>黑铁会员</button></a>
-   <br/>
-    <a href="${ctx}/user/checkVipUser?vipId=1,2,3"><button>会员用户</button></a>
-    <table>
-        <tr class="tab-header">
-            <td>编号</td>
-            <td>用户名</td>
-            <td>余额</td>
-            <td>状态</td>
-            <td>会员等级</td>
-            <td>operation操作</td>
-        </tr>
-        <c:forEach items="${listUserTab}" var="u">
-            <tr>
-                <td>${u.id}</td>
-                <td>${u.name}</td>
-                <td>${u.money}</td>
-                <td>${u.state}</td>
-                <td>
-                    <a href="${ctx}/user/checkVip?vipid=${u.vipid}"><button>查看会员</button></a>
-                </td>
-                <td>
-                    operation操作
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-</div>
 <%--</details>--%>
+
+
+
 
 <%--</details>--%>
 
@@ -189,6 +228,44 @@ ${user}<br/>
     .tab-header{
         font-weight: bolder;
     }
+    .fuzzy{
+        color: transparent;
+        text-shadow: #111 0 0 10px;
+        font-size: 30px;
+    }
+    .fuzzy{
+        box-shadow:
+                0 0 0 6px rgba(0, 0, 0, 0.2),
+                /*0 0 0 12px rgba(0, 0, 0, 0.2),*/
+                /*0 0 0 18px rgba(0, 0, 0, 0.2),*/
+                /*0 0 0 24px rgba(0, 0, 0, 0.2),*/
+                0 0 0 30px rgba(0, 0, 0, 0.2);
+        height: 200px;
+        margin: 50px auto;
+        width: 400px;
+        border-radius: 10px;
+    }
+    .ctx-box{
+        box-shadow:
+                0 0 0 6px rgba(0, 0, 0, 0.2),
+                    /*0 0 0 12px rgba(0, 0, 0, 0.2),*/
+                    /*0 0 0 18px rgba(0, 0, 0, 0.2),*/
+                    /*0 0 0 24px rgba(0, 0, 0, 0.2),*/
+                0 0 0 30px rgba(0, 0, 0, 0.2);
+        height: 200px;
+        margin: 50px auto;
+        width: 400px;
+        border-radius: 10px;
+    }
+    html{
+        height: 100%;
+    }
+    <%--body{--%>
+    <%--    background-image: url("${ctx}/images/1.png");--%>
+    <%--    background-size: 100%;--%>
+    <%--    padding: 0;--%>
+    <%--    margin: 0;--%>
+    <%--}--%>
 </style>
 <script>
     function init() {

@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,7 @@ import java.util.regex.Pattern;
 /**
  * @author ygm
  */
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -140,6 +142,7 @@ public class UserController {
         return "index";
     }
 
+
     @RequestMapping("/updPwd")
     public String updPassMd5Salt(Model model,User user,String oldPwd,String newPwd){
         String mgs = "无操作";
@@ -215,6 +218,7 @@ public class UserController {
         model.addAttribute("mgs",mgs);
         return "index";
     }
+
 
     @RequestMapping("/login")
     public String loginUser(Model model,User user){
@@ -293,6 +297,7 @@ public class UserController {
         return "index";
     }
 
+
     @RequestMapping("/actStatus")
     public String actUserStatus(Model model,User user){
         String mgs = "未操作";
@@ -316,6 +321,7 @@ public class UserController {
         return "index";
     }
 
+//    修改用户状态
     @RequestMapping("/actStatusDown")
     public String actStatusDown(Model model,User user){
         String mgs = "未操作";
@@ -339,6 +345,7 @@ public class UserController {
         return "index";
     }
 
+    //查询用户所有，不分页
     @RequestMapping("/listUserNoPager")
     public String listUser(Model model,User user,HttpServletRequest req){
 //       查询所有（支持模糊查询，字段为，名字，身份证号）
@@ -366,6 +373,7 @@ public class UserController {
         return "index";
     }
 
+//    查询用户所有，分页，支持模糊查询
     @RequestMapping("/listUserBy")
     public String actUserStatusDown(Model model,User user,HttpServletRequest req){
         //       查询所有（支持模糊查询，字段为，名字，身份证号）
@@ -396,6 +404,7 @@ public class UserController {
         return "index";
     }
 
+//    查询用户vip账号
     @RequestMapping("/checkVip")
     public String checkVip(Model model,User user,UserVip userVip){
         String mgs= "无操作";
@@ -412,6 +421,7 @@ public class UserController {
         return "index";
     }
 
+//    查询vip用户
     @RequestMapping("/checkVipUser")
     public String checkVipUser(Model model, UserDto userDto,HttpServletRequest req){
         String mgs= "无操作";

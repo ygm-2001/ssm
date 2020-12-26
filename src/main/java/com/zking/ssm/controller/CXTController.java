@@ -15,7 +15,7 @@ public class CXTController {
     @Scheduled(cron = "0 30 22 ? * *")
     @RequestMapping("/test1")
     public String test(){
-        return "forward:/hello3";
+        return "forward:/testMain";
     }
 
     @RequestMapping("/time")

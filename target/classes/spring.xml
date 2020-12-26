@@ -8,5 +8,5 @@
     <import resource="spring-ehcache.xml"/>
     <import resource="spring-redis.xml"/>
     <!-- 新加入的计时器配置 -->
-    <import resource="spring-scheduler.xml"/>
+<!--    <import resource="spring-scheduler.xml"/>-->
 </beans>

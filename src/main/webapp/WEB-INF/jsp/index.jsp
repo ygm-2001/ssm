@@ -19,6 +19,13 @@
 
 </details>
 
+<%--测试按钮--%>
+<div>
+    <a href="${ctx}/computer/startCount4">
+        <button>测试quartz</button>
+    </a>
+</div>
+
 <div align="center">
     <h3>正式测试</h3>
 </div>
@@ -250,6 +257,15 @@ ${user}<br/>
         width: 400px;
         border-radius: 10px;
     }
+    html{
+        height: 100%;
+    }
+    <%--body{--%>
+    <%--    background-image: url("${ctx}/images/1.png");--%>
+    <%--    background-size: 100%;--%>
+    <%--    padding: 0;--%>
+    <%--    margin: 0;--%>
+    <%--}--%>
 </style>
 <script>
     function init() {
