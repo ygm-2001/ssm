@@ -3,6 +3,8 @@ package com.zking.ssm.mapper;
 import com.zking.ssm.model.Shop;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ShopMapper {
     int deleteByPrimaryKey(Long shopId);
@@ -16,4 +18,6 @@ public interface ShopMapper {
     int updateByPrimaryKeySelective(Shop record);
 
     int updateByPrimaryKey(Shop record);
+
+    List<Shop> selectShopAllPager(Shop shop);
 }

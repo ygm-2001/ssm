@@ -1,7 +1,9 @@
 package com.zking.ssm.service;
 
 import com.zking.ssm.model.Shop;
-import org.springframework.stereotype.Repository;
+import com.zking.ssm.util.PageBean;
+
+import java.util.List;
 
 public interface IShopService {
     int deleteByPrimaryKey(Long shopId);
@@ -15,4 +17,8 @@ public interface IShopService {
     int updateByPrimaryKeySelective(Shop record);
 
     int updateByPrimaryKey(Shop record);
+
+//    查询所有商品，当然支持模糊查询
+    List<Shop> selectShopAllPager(Shop shop, PageBean pageBean);
+
 }

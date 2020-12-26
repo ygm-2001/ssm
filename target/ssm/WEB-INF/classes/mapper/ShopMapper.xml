@@ -25,7 +25,15 @@
     from t_shop
     where shop_id = #{shopId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="selectShopAllPager" resultType="com.zking.ssm.model.Shop">
+      select * from t_shop where
+      <if test="null != shopType and ''!= shopType">
+        shop_Type like concat('%',#{shopType},'%') and
+      </if>
+      shop_State = '1'
+      order by shop_Time desc
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_shop
     where shop_id = #{shopId,jdbcType=BIGINT}
   </delete>

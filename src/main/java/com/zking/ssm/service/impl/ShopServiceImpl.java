@@ -3,8 +3,11 @@ package com.zking.ssm.service.impl;
 import com.zking.ssm.mapper.ShopMapper;
 import com.zking.ssm.model.Shop;
 import com.zking.ssm.service.IShopService;
+import com.zking.ssm.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ShopServiceImpl implements IShopService {
@@ -39,5 +42,10 @@ public class ShopServiceImpl implements IShopService {
     @Override
     public int updateByPrimaryKey(Shop record) {
         return shopMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Shop> selectShopAllPager(Shop shop, PageBean pageBean) {
+        return shopMapper.selectShopAllPager(shop);
     }
 }
